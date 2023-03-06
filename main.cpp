@@ -1,32 +1,51 @@
 //#include <iostream>
-//#include <fstream>
+//#include <thread>
 //using namespace std;
 //
-//int main(){
-//    ofstream send("/home/sunil/CLionProjects/only_c++/file.txt");
-//    send << "I'm bot." << endl;
-//    send << "I'm noob." << endl;
-//    send << "I'm pro." << endl;
-//    send.close();
-//
-//    ifstream read("/home/sunil/CLionProjects/only_c++/readme.txt");
-//    string store;
-//    getline(read, store);
-//    cout << store;
-//    read.close();
+//void f1(int n){
+//    for(int i=0;i<5;i++){
+//        cout << "This is f1 method" << endl;
+//        ++n;
+//        this_thread::sleep_for(chrono::seconds (0));
+//    }
+//    cout << this_thread::get_id() << endl;
 //}
 //
+//void f2(int& n){
+//    for(int i=0;i<5;i++){
+//        cout << "This is f2 method.........." << endl;
+//        ++n;
+//        this_thread::sleep_for(chrono::seconds (0));
+//    }
+//    cout << this_thread::get_id() << endl;
+//}
+//
+//int main(){
+//    int n = 0;
+//    thread t1(f1, n);
+//    cout << this_thread::get_id() << endl;
+//    thread::id t1_id = t1.get_id();
+//    thread t2(f2, ref(n));
+//    cout << this_thread::get_id() << endl;
+//    thread::id t2_id = t2.get_id();
+//    t1.join();
+//    t2.join();
+//    cout << t1_id << endl;
+//    cout << t2_id << endl;
+//}
 #include <iostream>
-#include <fstream>
+#include <thread>
 using namespace std;
 
-int main(){
-    ofstream send("/home/sunil/CLionProjects/only_c++/file.txt");
-    send << "Hi this is last set for today.";
-    send.close();
+void test_meth(){
+    cout << "CAlled thread" << endl;
+}
 
-    ifstream recevice("/home/sunil/CLionProjects/only_c++/readme.txt");
-    string st2;
-    getline(recevice, st2);
-    cout << st2;
+int main(){
+    thread t;
+    cout << t.joinable() << endl;
+    t = thread(test_meth);
+    cout << t.joinable() << endl;
+    t.join();
+    cout << t.joinable() << endl;
 }
