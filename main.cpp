@@ -1,51 +1,63 @@
 //#include <iostream>
+//#include <ctime>
+//#include <cstdlib>
 //#include <thread>
+//#include <future>
 //using namespace std;
+//int num;
+//int even_ind = 0;
+//int odd_ind = 0;
+//int oddarray[10];
+//int evenarray[10];
 //
-//void f1(int n){
-//    for(int i=0;i<5;i++){
-//        cout << "This is f1 method" << endl;
-//        ++n;
-//        this_thread::sleep_for(chrono::seconds (0));
+//
+//int random_num(){
+////    this_thread::sleep_for(chrono::milliseconds(1));
+//    srand(time(0));
+//    num =  (rand() % 100) + 1;
+//    return num;
+//}
+//
+//void store_odd_num(int num){
+//    oddarray[odd_ind] = num;
+//    odd_ind++;
+//}
+//
+//void store_even_num(int num){
+//    evenarray[even_ind] = num;
+//    even_ind++;
+//}
+//
+//void check_odd_even(int num){
+//    cout << num << endl;
+//    if(num%2 == 0){
+//        thread t2(store_even_num, num);
+////        this_thread::sleep_for(chrono::milliseconds (100));
+//        t2.join();
+//    } else{
+//        thread t3(store_odd_num, num);
+////        this_thread::sleep_for(chrono::milliseconds(100));
+//        t3.join();
 //    }
-//    cout << this_thread::get_id() << endl;
 //}
-//
-//void f2(int& n){
-//    for(int i=0;i<5;i++){
-//        cout << "This is f2 method.........." << endl;
-//        ++n;
-//        this_thread::sleep_for(chrono::seconds (0));
-//    }
-//    cout << this_thread::get_id() << endl;
-//}
-//
-//int main(){
-//    int n = 0;
-//    thread t1(f1, n);
-//    cout << this_thread::get_id() << endl;
-//    thread::id t1_id = t1.get_id();
-//    thread t2(f2, ref(n));
-//    cout << this_thread::get_id() << endl;
-//    thread::id t2_id = t2.get_id();
-//    t1.join();
-//    t2.join();
-//    cout << t1_id << endl;
-//    cout << t2_id << endl;
-//}
+
 #include <iostream>
+#include <cstdlib>
 #include <thread>
+#include <time.h>
+#include <future>
 using namespace std;
+int num;
 
-void test_meth(){
-    cout << "CAlled thread" << endl;
+int random_num(){
+    srand(time(0));
+    num =  (rand() % 10) + 1;
+    return num;
 }
-
-int main(){
-    thread t;
-    cout << t.joinable() << endl;
-    t = thread(test_meth);
-    cout << t.joinable() << endl;
-    t.join();
-    cout << t.joinable() << endl;
+int main()
+{
+    for(int i=0;i<10;i++) {
+        future<int> result = async(launch::async, random_num);
+        cout << result.get() << endl;
+    }
 }
